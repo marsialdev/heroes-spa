@@ -1,0 +1,1 @@
+export { HeroesLayout } from './HeroesLayout';
