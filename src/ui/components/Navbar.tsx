@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { IoClose } from 'react-icons/io5';
 import { IoMdMenu } from 'react-icons/io';
-import { NavItemDesktop, NavItemMobile } from './';
+import { NavItem, NavLogoutButton } from './';
 
 export const Navbar = () => {
   const { pathname } = useLocation();
@@ -11,6 +11,12 @@ export const Navbar = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate('/login', { replace: true });
+  };
 
   return (
     <nav className="px-4 bg-slate-950 outline-primary/10 outline-1 md:outline-0 md:px-8">
@@ -25,6 +31,7 @@ export const Navbar = () => {
             Heroes SPA
           </span>
         </Link>
+
         <button
           data-collapse-toggle="navbar-solid-bg"
           type="button"
@@ -42,10 +49,11 @@ export const Navbar = () => {
 
         {/* Desktop */}
         <div className="w-auto hidden md:block" id="navbar-solid-bg">
-          <ul className="flex flex-row mt-0 space-x-6 rtl:space-x-reverse font-medium rounded-lg border-0 bg-transparent">
-            <NavItemDesktop url="/marvel" name="Marvel" />
-            <NavItemDesktop url="/dc" name="DC" />
-            <NavItemDesktop url="/login" name="Logout" />
+          <ul className="flex flex-row items-center mt-0 space-x-6 rtl:space-x-reverse font-medium rounded-lg border-0 bg-transparent">
+            <NavItem url="/marvel" name="Marvel" />
+            <NavItem url="/dc" name="DC" />
+            <NavLogoutButton onLogout={handleLogout} />
+            <span className="text-gray-500">¡Bienvenido!</span>
           </ul>
         </div>
 
@@ -54,15 +62,16 @@ export const Navbar = () => {
           className={`w-full transition-all duration-300 ease-in-out overflow-hidden md:hidden
             ${
               isOpen
-                ? 'h-42 opacity-100 pointer-events-auto'
+                ? 'h-48 opacity-100 pointer-events-auto'
                 : 'h-0 opacity-0 pointer-events-none'
             }
           `}
         >
           <ul className="flex flex-col mt-4 rounded-xl bg-transparent font-medium">
-            <NavItemMobile url="/marvel" name="Marvel" />
-            <NavItemMobile url="/dc" name="DC" />
-            <NavItemMobile url="/login" name="Logout" />
+            <span className="my-2 text-gray-500">¡Bienvenido!</span>
+            <NavItem url="/marvel" name="Marvel" />
+            <NavItem url="/dc" name="DC" />
+            <NavLogoutButton onLogout={handleLogout} />
           </ul>
         </div>
       </div>
