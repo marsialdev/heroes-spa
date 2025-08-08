@@ -1,11 +1,21 @@
 import { useNavigate } from 'react-router';
 import { VscDebugStart } from 'react-icons/vsc';
+import { useContext } from 'react';
+import { AuthContext } from '../context';
 
 export const LoginPage = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) throw new Error('Debe estar dentro de <AuthProvider>');
+
+  const { login } = context;
+
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate('/', { replace: true });
+    const lastPath = localStorage.getItem('lastPath') || '/';
+    login('Mario Marcial');
+    navigate(lastPath, { replace: true });
   };
 
   return (
