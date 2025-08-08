@@ -1,11 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
+import { HashRouter, Routes, Route, Navigate } from 'react-router';
 import { MarvelPage, DCPage, SearchPage, HeroPage } from './heroes/pages';
 import { LoginPage } from './auth/pages/LoginPage';
 import { ProtectedLayout, PublicLayout } from './layouts';
 
 export const AppRouter = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<ProtectedLayout />}>
           {/* Redirect from / to /marvel */}
@@ -26,6 +26,6 @@ export const AppRouter = () => {
         {/* Catch-all for invalid routes */}
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
