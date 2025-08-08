@@ -1,10 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { IoClose } from 'react-icons/io5';
 import { IoMdMenu } from 'react-icons/io';
 import { NavItem, NavLogoutButton } from './';
+import { AuthContext } from '../../auth/context';
 
 export const Navbar = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) throw new Error('Debe estar dentro de <AuthProvider>');
+
+  const {
+    state: { user },
+    logout,
+  } = context;
+
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,12 +25,13 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    logout();
     navigate('/login', { replace: true });
   };
 
   return (
     <nav className="px-4 bg-slate-950 outline-primary/10 outline-1 md:outline-0 md:px-8">
-      <div className="max-w-screen-lg flex flex-wrap items-center justify-between mx-auto py-4 md:py-6 xl:py-7">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 md:py-6 xl:py-7">
         <Link
           to="/"
           className="flex items-center space-x-2 rtl:space-x-reverse"
@@ -52,8 +63,11 @@ export const Navbar = () => {
           <ul className="flex flex-row items-center mt-0 space-x-6 rtl:space-x-reverse font-medium rounded-lg border-0 bg-transparent">
             <NavItem url="/marvel" name="Marvel" />
             <NavItem url="/dc" name="DC" />
+            <NavItem url="/search" name="Search" />
             <NavLogoutButton onLogout={handleLogout} />
-            <span className="text-gray-500">¡Bienvenido!</span>
+            <span className="text-gray-500">{`¡Bienvenido ${
+              user?.name ?? ''
+            }!`}</span>
           </ul>
         </div>
 
@@ -62,15 +76,18 @@ export const Navbar = () => {
           className={`w-full transition-all duration-300 ease-in-out overflow-hidden md:hidden
             ${
               isOpen
-                ? 'h-48 opacity-100 pointer-events-auto'
+                ? 'h-58 opacity-100 pointer-events-auto'
                 : 'h-0 opacity-0 pointer-events-none'
             }
           `}
         >
           <ul className="flex flex-col mt-4 rounded-xl bg-transparent font-medium">
-            <span className="my-2 text-gray-500">¡Bienvenido!</span>
+            <span className="text-gray-500 my-2">{`¡Bienvenido ${
+              user?.name ?? ''
+            }!`}</span>
             <NavItem url="/marvel" name="Marvel" />
             <NavItem url="/dc" name="DC" />
+            <NavItem url="/search" name="Search" />
             <NavLogoutButton onLogout={handleLogout} />
           </ul>
         </div>
