@@ -7,7 +7,7 @@ export const HeroesLayout = () => {
       <div className="bg-slate-900 min-h-screen">
         <Navbar />
 
-        <div className="max-w-screen-xl mx-auto">
+        <div className="max-w-screen-xl mx-auto p-4 md:px-8 xl:px-0">
           <Outlet />
         </div>
       </div>
