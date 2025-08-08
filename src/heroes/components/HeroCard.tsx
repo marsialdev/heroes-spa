@@ -7,7 +7,7 @@ interface HeroCardProps {
 }
 
 export const HeroCard = ({ hero }: HeroCardProps) => {
-  const heroImage = `/heroes/${hero.id}.jpg`;
+  const heroImage = `${import.meta.env.BASE_URL}heroes/${hero.id}.jpg`;
   const heroURL = `/hero/${hero.id}`;
 
   return (

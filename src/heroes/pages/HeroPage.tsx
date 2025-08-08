@@ -13,7 +13,7 @@ export const HeroPage = () => {
   const hero = useMemo(() => getHeroById(id), [id]);
   if (!hero) return <Navigate to="/marvel" />;
 
-  const heroImage = `/heroes/${hero.id}.jpg`;
+  const heroImage = `${import.meta.env.BASE_URL}heroes/${hero.id}.jpg`;
 
   const onNavigateBack = () => {
     navigate(-1);
